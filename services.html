@@ -234,6 +234,16 @@
       </div>
     </div>
 
+    <div class="container-img">
+      <p>Clasificador de Imagen</p>
+      <input type="file" id="imageUpload" accept="image/*">
+      <img id="preview" alt="Vista previa de la imagen">
+      <button id="classifyBtn">Clasificar Imagen</button>
+      <p id="result">Resultado: </p>
+    </div>
+  
+    
+    
     
     <div class="site-section">
       <div class="container">
@@ -375,7 +385,8 @@
       </div>
     </footer>
   </div>
-
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet"></script>  
   <script src="js/jquery-3.3.1.min.js"></script>
   <script src="js/jquery-migrate-3.0.1.min.js"></script>
   <script src="js/jquery-ui.js"></script>

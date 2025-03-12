@@ -282,6 +282,92 @@ jQuery(document).ready(function($) {
 	}
 	counter();
 
+	$(document).ready(function() {
+		async function classifyImage() {
+			const img = document.getElementById('preview');
+			if (!img.src || img.src === window.location.href) {
+				alert("Por favor, sube una imagen antes de clasificar.");
+				return;
+			}
+			const model = await mobilenet.load();
+			const predictions = await model.classify(img);
+	
+			// Diccionario de traducción ampliado con términos de fisioterapia
+			const traducciones = {
+				// Equipos y objetos de fisioterapia
+				"dumbbell": "ejercicio mancuerna",
+				"barbell": "barra de pesas",
+				"exercise ball": "pelota de ejercicio",
+				"towel": "toalla",
+				"yoga mat": "colchoneta de yoga",
+				"stretcher": "camilla",
+				"wheelchair": "silla de ruedas",
+				"walker": "andador",
+				"crutch": "muleta",
+				"resistance band": "banda elástica",
+				"kettlebell": "pesa rusa",
+				"foam roller": "rodillo de espuma",
+				"medicine ball": "balón medicinal",
+				"theraband": "banda terapéutica",
+				"parallel bars, bars": "barras paralelas",
+				"gown": "dolor muscular de hombro",
+				"stationary bike": "bicicleta estática",
+				"rowing machine": "máquina de remo",
+	
+				// Posturas y ejercicios de rehabilitación
+				"plank": "plancha",
+				"squat": "sentadilla",
+				"lunge": "estocada",
+				"bridge": "puente de glúteos",
+				"stretch": "estiramiento",
+				"push-up": "flexión de brazos",
+				"pull-up": "dominada",
+				"deadlift": "peso muerto",
+				"leg raise": "elevación de pierna",
+				"calf raise": "elevación de talones",
+				"arm curl": "curl de bíceps",
+				"shoulder press": "press de hombros",
+				"chest press": "press de pecho",
+				"rowing": "remo",
+				"bearskin, busby, shako": "dolor muscular de cuello",
+				"sea slug, nudibranch": "dolor muscular columna vertebral",
+	
+				// Partes del cuerpo y áreas comunes de fisioterapia
+				"shoulder": "hombro",
+				"knee": "rodilla",
+				"ankle": "tobillo",
+				"spine": "columna vertebral",
+				"hip": "cadera",
+				"wrist": "muñeca",
+				"elbow": "codo",
+				"neck": "cuello",
+				"back": "espalda",
+				"muscle": "músculo",
+				"joint": "articulación",
+			};
+	
+			let className = predictions[0].className;
+			let classNameEsp = traducciones[className] || className; // Traducción si existe, sino deja en inglés
+	
+			$("#result").text(`Resultado: ${classNameEsp}`);
+		}
+	
+		$("#imageUpload").change(function(event) {
+			const file = event.target.files[0];
+			if (file) {
+				const reader = new FileReader();
+				reader.onload = function(e) {
+					$("#preview").attr("src", e.target.result);
+				};
+				reader.readAsDataURL(file);
+			}
+		});
+	
+		$("#classifyBtn").click(function() {
+			classifyImage();
+		});
+	});
+	
 	
 
 });
